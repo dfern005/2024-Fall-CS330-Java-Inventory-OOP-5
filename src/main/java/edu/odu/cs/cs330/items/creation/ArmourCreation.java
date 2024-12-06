@@ -22,14 +22,14 @@ public class ArmourCreation implements ItemCreationStrategy
     public Item fromDefaults()
     {
         // Return a **Default** Armour
-        return null;
+        return new Armour("[Placeholder]", 0, 0, "[Default Material]", "[Default Modifier]", 0, "[Default Element]");
     }
 
     @Override
     public int requiredNumberOfValues()
     {
         // Replace the return value;
-        return 0;
+        return 7;
     }
 
     @SuppressWarnings({
@@ -39,7 +39,15 @@ public class ArmourCreation implements ItemCreationStrategy
     @Override
     public Item fromTokens(final String... tokens)
     {
-        return null;
+        String name = tokens[0];
+        String material = tokens[1];
+        int durability = Integer.parseInt(tokens[2]);
+        int defense = Integer.parseInt(tokens[3]);
+        String modifier = tokens[4];
+        int modifierLevel = Integer.parseInt(tokens[5]);
+        String element = tokens[6];
+
+        return new Armour(name, durability, defense, material, modifier, modifierLevel, element);
     }
 
     @SuppressWarnings({
@@ -56,6 +64,8 @@ public class ArmourCreation implements ItemCreationStrategy
 
         Armour theOriginal = (Armour) original;
 
-        return null;
+        return new Armour(theOriginal.getName(), theOriginal.getDurability(), theOriginal.getDefense(),
+                      theOriginal.getMaterial(), theOriginal.getModifier(),
+                      theOriginal.getModifierLevel(), theOriginal.getElement());
     }
 }

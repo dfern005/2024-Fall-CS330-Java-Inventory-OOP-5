@@ -29,7 +29,7 @@ public class ConsumableCreation implements ItemCreationStrategy
     public int requiredNumberOfValues()
     {
         // Replace the return value;
-        return 0;
+        return 3;
     }
 
     @SuppressWarnings({
@@ -39,7 +39,20 @@ public class ConsumableCreation implements ItemCreationStrategy
     @Override
     public Item fromTokens(final String... tokens)
     {
-        return null;
+        if (tokens.length != requiredNumberOfValues()) {
+            return null;
+        }
+
+        String name = tokens[0];
+        String effect = tokens[1];
+        int uses;
+        try {
+            uses = Integer.parseInt(tokens[2]);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+
+        return new Consumable(name, effect, uses);
     }
 
     @SuppressWarnings({
@@ -56,6 +69,6 @@ public class ConsumableCreation implements ItemCreationStrategy
 
         Consumable theOriginal = (Consumable) original;
 
-        return new Consumable();
+        return new Consumable(theOriginal.getName(), theOriginal.getEffect(), theOriginal.getNumberOfUses());
     }
 }

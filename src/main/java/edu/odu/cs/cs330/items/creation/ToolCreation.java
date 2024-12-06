@@ -22,14 +22,14 @@ public class ToolCreation implements ItemCreationStrategy
     public Item fromDefaults()
     {
         // Return a **Default** Tool
-        return null;
+        return new Tool("[Placeholder]", 0, 0, "[Default Material]", "[Default Modifier]", 0);
     }
 
     @Override
     public int requiredNumberOfValues()
     {
         // Replace the return value;
-        return 0;
+        return 6;
     }
 
     @SuppressWarnings({
@@ -39,16 +39,25 @@ public class ToolCreation implements ItemCreationStrategy
     @Override
     public Item fromTokens(final String... tokens)
     {
-        /*
-        return new Tool(
-            tokens[0],
-            ...
-            ...
-            ...
-        );
-        */
+        if (tokens.length != requiredNumberOfValues()) {
+            return null;
+        }
 
-        return new Tool();
+        String name = tokens[0];
+        int durability;
+        int speed;
+        String material = tokens[2];
+        String modifier = tokens[4];
+        int modifierLevel;
+        try {
+            durability = Integer.parseInt(tokens[1]);
+            speed = Integer.parseInt(tokens[3]);
+            modifierLevel = Integer.parseInt(tokens[5]);
+        } catch (NumberFormatException e) {
+            return null; 
+        }
+
+        return new Tool(name, durability, speed, material, modifier, modifierLevel);
     }
 
     @SuppressWarnings({
@@ -65,6 +74,7 @@ public class ToolCreation implements ItemCreationStrategy
 
         Tool theOriginal = (Tool) original;
 
-        return null;
+        return new Tool(theOriginal.getName(), theOriginal.getDurability(), theOriginal.getSpeed(),
+        theOriginal.getMaterial(), theOriginal.getModifier(), theOriginal.getModifierLevel());
     }
 }

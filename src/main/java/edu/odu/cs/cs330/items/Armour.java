@@ -77,13 +77,14 @@ public class Armour extends Equippable implements Item
     @Override
     public boolean equals(Object rhs)
     {
+        if (this == rhs) return true;
         if (!(rhs instanceof Armour)) {
             return false;
         }
 
         Armour rhsItem = (Armour) rhs;
 
-        return false;
+        return this.defense == rhsItem.defense && super.equals(rhsItem);
     }
 
     /**
@@ -93,9 +94,7 @@ public class Armour extends Equippable implements Item
     @Override
     public int hashCode()
     {
-        return Objects.hash(
-            this.getName()
-        );
+        return Objects.hash(super.hashCode(), this.defense);
     }
 
     /**
@@ -104,7 +103,8 @@ public class Armour extends Equippable implements Item
     @Override
     public String toString()
     {
-        return "Use the provided format string";
+        return String.format(FMT_STR, this.getName(), this.getDurability(), this.defense, this.getMaterial(),
+                this.getModifier(), this.getModifierLevel(), this.getElement());
     }
 }
 
